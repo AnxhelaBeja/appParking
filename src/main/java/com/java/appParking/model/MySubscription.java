@@ -24,9 +24,11 @@ public class MySubscription {
     private LocalDate endDate;
     @OneToOne
     private ParkingSpace parkingSpace;
+    @Transient
     @ManyToOne
     @JoinColumn(name = "admin_id")
     private Admin admin;
+    @Transient
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -35,8 +37,7 @@ public class MySubscription {
     public MySubscription() {
     }
 
-    public MySubscription(int id, Car car, Client client, LocalDate startDate,
-                        LocalDate endDate, ParkingSpace parkingSpace, Admin admin, User user) {
+    public MySubscription(int id, Car car, Client client, LocalDate startDate, LocalDate endDate, ParkingSpace parkingSpace, Admin admin, User user) {
         this.id = id;
         this.car = car;
         this.client = client;

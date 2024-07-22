@@ -13,6 +13,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class MySubscriptionService {
 
@@ -28,7 +32,6 @@ public class MySubscriptionService {
         this.parkingSpaceRepository = parkingSpaceRepository;
     }
 
-
     public MySubscription createSubscription(MySubscription subscription) {
         Car car = carRepository.findById(subscription.getCar().getId())
                 .orElseThrow(() -> new RuntimeException("Car not found"));
@@ -42,12 +45,34 @@ public class MySubscriptionService {
         subscription.setCar(car);
         subscription.setClient(client);
         subscription.setParkingSpace(parkingSpace);
+        parkingSpace.setStatus(true);
+        parkingSpaceRepository.save(parkingSpace);
 
         return mySubscriptionRepository.save(subscription);
     }
 
+    public void checkAndUpdateExpiredSubscriptions() {
+
+        List<MySubscription> allSubscriptions = mySubscriptionRepository.findByEndDateBefore(LocalDate.now());
+
+        for (MySubscription subscription : allSubscriptions) {
+            ParkingSpace parkingSpace = subscription.getParkingSpace();
+            parkingSpace.setStatus(false);
+            parkingSpaceRepository.save(parkingSpace);
+        }}
+
+        public void deleteSubscription ( int id){
+            MySubscription subscription = mySubscriptionRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Subscription not found"));
+
+            ParkingSpace parkingSpace = subscription.getParkingSpace();
+            if (parkingSpace != null) {
+                parkingSpace.setStatus(false);
+                parkingSpaceRepository.save(parkingSpace);
+            }
+
+            mySubscriptionRepository.deleteById(id);
+        }
 
 
-
-
-}
+    }

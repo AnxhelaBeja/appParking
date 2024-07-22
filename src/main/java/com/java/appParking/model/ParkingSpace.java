@@ -20,12 +20,14 @@ public class ParkingSpace {
     private boolean status;
     private int numberOfSpaces;
 
-    public ParkingSpace() {
-    }
-
     public ParkingSpace(int id, boolean status, int numberOfSpaces) {
         this.id = id;
         this.status = status;
         this.numberOfSpaces = numberOfSpaces;
     }
+
+    public ParkingSpace() {
+    }
+
+
 }

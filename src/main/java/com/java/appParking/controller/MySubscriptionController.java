@@ -13,10 +13,7 @@ import com.java.appParking.service.ClientService;
 import com.java.appParking.service.EmailService;
 import com.java.appParking.service.MySubscriptionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/subscription")
@@ -66,6 +63,14 @@ public class MySubscriptionController {
         return ResponseEntity.ok("Subscription created");
     }
 
-
-
+  @GetMapping("/checkExpired")
+    public ResponseEntity<String>checkExpiredSubscriptions(){
+        mySubscriptionService.checkAndUpdateExpiredSubscriptions();
+        return ResponseEntity.ok("Subscriptions expired");
+  }
+   @DeleteMapping("/{id}")
+    public ResponseEntity<String>deleteSubscription(@PathVariable int id){
+        mySubscriptionService.deleteSubscription(id);
+        return ResponseEntity.noContent().build();
+   }
 }
