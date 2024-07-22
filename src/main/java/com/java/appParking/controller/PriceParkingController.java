@@ -6,6 +6,9 @@ import com.java.appParking.service.PriceParkingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("/api/priceParking")
 public class PriceParkingController {
@@ -29,7 +32,10 @@ public class PriceParkingController {
 
 
     @PostMapping("/set")
-     public ResponseEntity<PriceParking> setNewPrice(@RequestBody PriceParking priceParking) {
-     return ResponseEntity.ok(priceParkingService.setNewPrice(priceParking.getPrice(),priceParking.getParkingTime()));
+     public ResponseEntity<PriceParking> setNewPrice(@RequestParam BigDecimal price,
+                                                     @RequestParam LocalDate parkingTime) {
+     PriceParking updatedPrice = priceParkingService.setNewPrice(price,parkingTime);
+        return ResponseEntity.ok(updatedPrice);
+
     }
 }

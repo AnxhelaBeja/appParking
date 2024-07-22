@@ -12,4 +12,6 @@ public interface MySubscriptionRepository extends JpaRepository<MySubscription, 
 
 
     List<MySubscription> findByEndDateBefore(LocalDate now);
+
+    List<MySubscription> findByEndDate(LocalDate reminderDate);
 }

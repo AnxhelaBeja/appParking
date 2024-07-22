@@ -73,4 +73,9 @@ public class MySubscriptionController {
         mySubscriptionService.deleteSubscription(id);
         return ResponseEntity.noContent().build();
    }
+    @GetMapping("/reminders/send")
+    public String sendReminders(){
+    mySubscriptionService.sendReminderEmails();
+        return "Reminder emails sent successfully!";
+    }
 }

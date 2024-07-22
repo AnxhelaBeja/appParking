@@ -11,6 +11,7 @@ import com.java.appParking.repository.MySubscriptionRepository;
 import com.java.appParking.repository.ParkingSpaceRepository;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,12 +25,14 @@ public class MySubscriptionService {
     private final CarRepository carRepository;
     private final ClientRepository clientRepository;
     private final ParkingSpaceRepository parkingSpaceRepository;
+    private final EmailService emailService;
 
-    public MySubscriptionService(MySubscriptionRepository mySubscriptionRepository, CarRepository carRepository, ClientRepository clientRepository, ParkingSpaceRepository parkingSpaceRepository) {
+    public MySubscriptionService(MySubscriptionRepository mySubscriptionRepository, CarRepository carRepository, ClientRepository clientRepository, ParkingSpaceRepository parkingSpaceRepository, EmailService emailService) {
         this.mySubscriptionRepository = mySubscriptionRepository;
         this.carRepository = carRepository;
         this.clientRepository = clientRepository;
         this.parkingSpaceRepository = parkingSpaceRepository;
+        this.emailService = emailService;
     }
 
     public MySubscription createSubscription(MySubscription subscription) {
@@ -75,4 +78,25 @@ public class MySubscriptionService {
         }
 
 
+    @Scheduled(cron = "0 0 1 * * ?")
+        public void sendReminderEmails(){
+
+        LocalDate today = LocalDate.now();
+        LocalDate reminderDate = today.plusDays(7);
+
+        List<MySubscription> expiringSubscriptions = mySubscriptionRepository.findByEndDate(reminderDate);
+
+        for (MySubscription subscription : expiringSubscriptions) {
+            Client client = subscription.getClient();
+            String email = client.getEmail();
+            String subject = "My Subscription Reminder";
+            String body = String.format(
+                    "Hello  %s %s,\n\n"  +
+                            "We remind you that your parking subscription in place %s.\n" +
+                            "Remember to renew in order to continue using the service.\n\n" +
+                            "Thank you,\nOur team",
+                    client.getFirstName(), client.getLastName(), subscription.getParkingSpace().getId(),subscription.getEndDate().toString());
+            emailService.sendEmail(email, subject, body);
+        }
+        }
     }
