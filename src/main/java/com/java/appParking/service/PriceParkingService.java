@@ -60,5 +60,27 @@ public class PriceParkingService {
                 .map(Client::getEmail)
                 .collect(Collectors.toList());
     }
+    public   void sendPriceIncreaseReminder(){
+        PriceParking currentPriceParking = priceParkingRepository.findTopByOrderByParkingTimeDesc();
+        if (currentPriceParking != null ){
+            LocalDate today = LocalDate.now();
+            if (today.equals(currentPriceParking.getParkingTime())){
+                String subject = "Parking Price Increase Reminder!";
+                String body = String.format(
+                        "Hello ,\n\n" +
+                         "We would like to inform you that the price for parking starts to increase from today.\n" +
+                                "The price increase is valid from today.\n\n"+
+                                "Please renew your subscription to take advantage of the current price.\n\n"+
+                                "Thank You \n ,Our Team ."
+                );
+                List<String>clientEmails= getClientEmails();
+                for (String email : clientEmails){
+                    emailService.sendEmail(email, subject, body);
+                }
+            }
+        }
+
+    }
+
 
 }

@@ -3,6 +3,7 @@ package com.java.appParking.controller;
 import com.java.appParking.model.PriceParking;
 import com.java.appParking.model.dto.CurrentPriceParking;
 import com.java.appParking.service.PriceParkingService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +38,10 @@ public class PriceParkingController {
      PriceParking updatedPrice = priceParkingService.setNewPrice(price,parkingTime);
         return ResponseEntity.ok(updatedPrice);
 
+    }
+    @GetMapping("/send-price-increase-reminder")
+    public ResponseEntity<Void> sendPriceIncreaseReminder() {
+        priceParkingService.sendPriceIncreaseReminder();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
