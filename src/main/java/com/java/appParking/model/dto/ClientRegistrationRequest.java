@@ -1,6 +1,7 @@
 package com.java.appParking.model.dto;
 
 public class ClientRegistrationRequest {
+
     private String firstName;
     private String lastName;
     private String password;

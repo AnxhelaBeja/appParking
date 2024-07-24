@@ -50,16 +50,6 @@ public class CarController {
         Car car = carService.getCar(carId);
         return ResponseEntity.ok(car);
     }
-//    @PostMapping("/registerCar")
-//    public ResponseEntity<String> registerCar(@RequestBody Car request) {
-//        Car car = carService.registerCar(request.getRegistrationNumber(), request.getCarType(), request.getColor(), request.getClient());
-//        return ResponseEntity.ok("Car registration was completed successfully");
-//    }
-//
-//    @PutMapping("/updateCar/{carId}")
-//    public ResponseEntity<String> updateCar(@PathVariable int carId, @RequestBody Car updatedCar) {
-//        carService.updateCar(carId, updatedCar);
-//        return ResponseEntity.ok("Car updated successfully");
-//    }
+
 }
 

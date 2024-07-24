@@ -22,13 +22,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     Role role;
 
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//    private Admin admin;
-
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//    private Client client;
-
-
     public Integer getId() {
         return id;
     }
@@ -86,19 +79,4 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-//    public String getFirstname() {
-//        return firstname;
-//    }
-//
-//    public void setFirstname(String firstname) {
-//        this.firstname = firstname;
-//    }
-//
-//    public String getLastname() {
-//        return lastname;
-//    }
-
-//    public void setLastname(String lastname) {
-//        this.lastname = lastname;
-//    }
 }

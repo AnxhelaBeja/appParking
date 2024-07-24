@@ -55,20 +55,6 @@ public class AuthenticationService {
         return new AuthenticationResponse(token);
     }
 
-//    public AuthenticationResponse register(User request){
-//        User user = new User();
-////        user.setFirstname(request.getFirstname());
-////        user.setLastname(request.getLastname());
-//        user.setUsername(request.getUsername());
-//        user.setPassword(passwordEncoder.encode(request.getPassword()));
-//
-//        user.setRole(request.getRole());
-//        user = userRepository.save(user);
-//
-//        String token = jwtService.generateToken(user);
-//        return new AuthenticationResponse(token);
-//
-//    }
 
     public AuthenticationResponse authenticate(LoginRequest request) {
        authenticationManager.authenticate(
@@ -81,6 +67,7 @@ public class AuthenticationService {
        String token = jwtService.generateToken(user);
        return new AuthenticationResponse(token);
     }
+
     public AuthenticationResponse registerClient(ClientRegistrationRequest request) {
         User user = new User();
         user.setUsername(request.getUsername());

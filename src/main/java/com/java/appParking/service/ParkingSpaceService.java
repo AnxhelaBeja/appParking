@@ -43,6 +43,4 @@ public class ParkingSpaceService {
     public long getAvailableParkingSpaces() {
         return parkingSpaceRepository.countByStatusFalse();
     }
-
-
 }

@@ -9,5 +9,4 @@ import java.util.Optional;
 public interface CarRepository extends JpaRepository<Car, Integer> {
 
 
-    Optional<Car> findByClientId(int clientId);
 }

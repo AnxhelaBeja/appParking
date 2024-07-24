@@ -30,8 +30,6 @@ public class PriceParkingController {
          return ResponseEntity.ok(response);
      }
 
-
-
     @PostMapping("/set")
      public ResponseEntity<PriceParking> setNewPrice(@RequestParam BigDecimal price,
                                                      @RequestParam LocalDate parkingTime) {
@@ -39,6 +37,7 @@ public class PriceParkingController {
         return ResponseEntity.ok(updatedPrice);
 
     }
+
     @GetMapping("/send-price-increase-reminder")
     public ResponseEntity<Void> sendPriceIncreaseReminder() {
         priceParkingService.sendPriceIncreaseReminder();
